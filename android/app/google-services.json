@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "357696112247",
+    "project_id": "what2visit",
+    "storage_bucket": "what2visit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357696112247:android:3458bafd7b68b1cc902872",
+        "android_client_info": {
+          "package_name": "com.nelfdesign.what2visit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357696112247-hkb2dfl1ajil50fckli52jbnjrccf0v3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nelfdesign.what2visit",
+            "certificate_hash": "660414609b997c82da00928b82a694debf7d99ae"
+          }
+        },
+        {
+          "client_id": "357696112247-poec75n25b98ig9nnttap4r78hhick4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIXK1hdT5LsHQDzeKt3qgEp-26WgsWnYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357696112247-poec75n25b98ig9nnttap4r78hhick4e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "357696112247-qdqvvfs62pk9t0aqr6d6rt2uc71u9mts.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nelfdesign.what2visit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
