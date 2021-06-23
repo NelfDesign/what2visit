@@ -1,21 +1,27 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
-  void onChange(Cubit cubit, Change change) {
-    print('${cubit.runtimeType} $change');
-    super.onChange(cubit, change);
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print(change);
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
-    print('${bloc.runtimeType} $transition');
     super.onTransition(bloc, transition);
-  }
-
-  @override
-  void onError(Cubit cubit, Object error, StackTrace stackTrace) {
-    print('${cubit.runtimeType} $error $stackTrace');
-    super.onError(cubit, error, stackTrace);
+    print(transition);
   }
 }
