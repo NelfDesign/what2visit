@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -168,11 +170,12 @@ class _SocialLoginButton extends StatelessWidget {
                 color: Colors.blueAccent,
                 press: () => context.read<LoginCubit>().logInWithFacebook(),
               ),
-              SocialIcon(
+             Platform.isIOS
+                 ? SocialIcon(
                 iconSrc: FontAwesomeIcons.apple,
                 color: Colors.black,
                 press: () => context.read<LoginCubit>().logInWithApple(),
-              )
+              ) : SizedBox(width: 0,)
             ]),
       ],
     );

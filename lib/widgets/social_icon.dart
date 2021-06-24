@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 
 class SocialIcon extends StatelessWidget {
   final IconData? iconSrc;
@@ -20,14 +19,15 @@ class SocialIcon extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.all(10),
-        height: Device.screenWidth > 440 ? 70 : 50,
-        width: Device.screenWidth > 440 ? 70 : 50,
+        height: 70,
+        width: 70,
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,
         ),
         child: Icon(
           iconSrc,
+          size: 30,
           color: Colors.white,
         ),
       ),
