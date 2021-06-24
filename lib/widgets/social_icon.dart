@@ -4,7 +4,7 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 class SocialIcon extends StatelessWidget {
   final IconData? iconSrc;
   final Color? color;
-  final Function? press;
+  final void Function()? press;
 
   SocialIcon({
     Key? key,
@@ -16,7 +16,7 @@ class SocialIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => press,
+      onTap: press,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.all(10),

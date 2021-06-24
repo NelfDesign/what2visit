@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:what2visit/login/login.dart';
 import 'package:formz/formz.dart';
 import 'package:what2visit/sign_up/sign_up.dart';
+import 'package:what2visit/theme.dart';
+import 'package:what2visit/widgets/social_icon.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -26,10 +28,6 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/bloc_logo_small.png',
-                height: 120,
-              ),
               const SizedBox(height: 16.0),
               _EmailInput(),
               const SizedBox(height: 8.0),
@@ -37,9 +35,10 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 8.0),
               _LoginButton(),
               const SizedBox(height: 8.0),
-              _GoogleLoginButton(),
-              const SizedBox(height: 4.0),
               _SignUpButton(),
+              const SizedBox(height: 8.0),
+              _SocialLoginButton(),
+              const SizedBox(height: 8.0),
             ],
           ),
         ),
@@ -100,41 +99,19 @@ class _LoginButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-          key: const Key('loginForm_continue_raisedButton'),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            primary: const Color(0xFFFFD600),
-          ),
-          onPressed: state.status.isValidated
-              ? () => context.read<LoginCubit>().logInWithCredentials()
-              : null,
-          child: const Text('LOGIN'),
-        );
+                key: const Key('loginForm_continue_raisedButton'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  primary: const Color(0xFFFFD600),
+                ),
+                onPressed: state.status.isValidated
+                    ? () => context.read<LoginCubit>().logInWithCredentials()
+                    : null,
+                child: const Text('LOGIN'),
+              );
       },
-    );
-  }
-}
-
-class _GoogleLoginButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ElevatedButton.icon(
-      key: const Key('loginForm_googleLogin_raisedButton'),
-      label: const Text(
-        'SIGN IN WITH GOOGLE',
-        style: TextStyle(color: Colors.white),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        primary: theme.accentColor,
-      ),
-      icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
     );
   }
 }
@@ -148,8 +125,56 @@ class _SignUpButton extends StatelessWidget {
       onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
       child: Text(
         'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
+        style: TextStyle(color: theme.scaffoldBackgroundColor),
       ),
+    );
+  }
+}
+
+class _SocialLoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Divider(
+          height: 1,
+          indent: 50,
+          endIndent: 50,
+          color: theme.scaffoldBackgroundColor,
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          'Ou connectez-vous avec ',
+          style: TextStyle(
+              fontSize: 18,
+              color: theme.scaffoldBackgroundColor),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            key: const Key('loginForm_socialLogin_raisedButton'),
+            children: [
+              SocialIcon(
+                iconSrc: FontAwesomeIcons.google,
+                color: Colors.blue,
+                press: () => context.read<LoginCubit>().logInWithGoogle(),
+              ),
+              SocialIcon(
+                iconSrc: FontAwesomeIcons.facebookF,
+                color: Colors.blueAccent,
+                press: () => context.read<LoginCubit>().logInWithFacebook(),
+              ),
+              SocialIcon(
+                iconSrc: FontAwesomeIcons.apple,
+                color: Colors.black,
+                press: () => context.read<LoginCubit>().logInWithApple(),
+              )
+            ]),
+      ],
     );
   }
 }
