@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GradientButton extends StatelessWidget {
   final double? width;
   final double? height;
-  final Function? onPressed;
+  final void Function()? onPressed;
   final Text? text;
   final Icon? icon;
 
@@ -25,7 +25,7 @@ class GradientButton extends StatelessWidget {
         ),
       ),
       child: MaterialButton(
-          onPressed: () => this.onPressed,
+          onPressed: this.onPressed,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: StadiumBorder(),
           child: Padding(

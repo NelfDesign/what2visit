@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:what2visit/app/observers/app.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:what2visit/home/home.dart';
+import 'package:what2visit/stripe/paiement_choice.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -34,6 +35,10 @@ class HomePage extends StatelessWidget {
             Text(user.email ?? '', style: textTheme.headline6),
             const SizedBox(height: 4.0),
             Text(user.name ?? '', style: textTheme.headline5),
+            const SizedBox(height: 20,),
+            ElevatedButton(
+                onPressed: () => PaymentChoice(amount: 20, user: user,),
+                child: Text('pay 20'))
           ],
         ),
       ),
