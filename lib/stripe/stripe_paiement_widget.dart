@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:stripe_payment/stripe_payment.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
 import 'package:what2visit/models/user.dart';
 import 'package:what2visit/widgets/button_cta.dart';
 import 'package:intl/intl.dart';
@@ -148,7 +148,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (redirectUrl != null && paymentStatus == "requires_action")
+    /*if (redirectUrl != null && paymentStatus == "requires_action")
       return Container(
         padding: EdgeInsets.only(left: 5, right: 5),
         child: ClipRRect(
@@ -168,7 +168,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
             },
           ),
         ),
-      );
+      );*/
 
     final addCardButton = ButtonCTA(
       width: Device.screenWidth,
