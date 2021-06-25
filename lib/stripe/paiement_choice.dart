@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:what2visit/models/user.dart';
-import 'package:what2visit/stripe/paypal_paiement.dart';
 import 'package:what2visit/stripe/stripe_paiement_widget.dart';
 
 class PaymentChoice extends StatefulWidget {
@@ -69,7 +68,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
         title: Text("Payer avec Apple Pay"),
         onTap: () => _paymentRequestWithNativePay(context, widget.amount!));
 
-    final paypalChoice = ListTile(
+    /*final paypalChoice = ListTile(
         leading: Image.asset(
           "assets/paypal.jpg",
           width: 35,
@@ -115,7 +114,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
               ),
             ),
           );
-        });
+        });*/
 
     final creditCardChoice = ListTile(
         leading: Image.asset(
@@ -138,7 +137,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
               : Platform.isIOS
               ? applePayChoice
               : SizedBox(height: 0),
-          paypalChoice,
+         // paypalChoice,
         ],
       ),
     );
