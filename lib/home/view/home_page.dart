@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:what2visit/app/observers/app.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:what2visit/home/home.dart';
@@ -37,7 +38,27 @@ class HomePage extends StatelessWidget {
             Text(user.name ?? '', style: textTheme.headline5),
             const SizedBox(height: 20,),
             ElevatedButton(
-                onPressed: () => PaymentChoice(amount: 20, user: user,),
+                onPressed: () async {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext buildContext) =>
+                          PaymentChoice(
+                            amount: 20,
+                            user: user,
+                            onSucceed: (paymentRef) {
+                              SchedulerBinding.instance!
+                                  .addPostFrameCallback((_) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        fullscreenDialog: true,
+                                        builder: (context) {
+                                          return HomePage();
+                                        }));
+                              });
+                            },
+                          ));
+                },
                 child: Text('pay 20'))
           ],
         ),

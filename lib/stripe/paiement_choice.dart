@@ -33,6 +33,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
       merchantId: "test",
       androidPayMode: "test",
     ));
+
   }
 
   void validOrder(DocumentReference paymentRef) {
@@ -127,18 +128,20 @@ class _PaymentChoiceState extends State<PaymentChoice> {
           _requestStripePayment(widget.amount!);
         });
 
-    final paymentChoiceView = Container(
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          creditCardChoice,
-          Platform.isAndroid
-              ? googlePayChoice
-              : Platform.isIOS
-              ? applePayChoice
-              : SizedBox(height: 0),
-         // paypalChoice,
-        ],
+    final paymentChoiceView = Material(
+      child: Container(
+        child: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            creditCardChoice,
+            Platform.isAndroid
+                ? googlePayChoice
+                : Platform.isIOS
+                ? applePayChoice
+                : SizedBox(height: 0),
+            // paypalChoice,
+          ],
+        ),
       ),
     );
 
@@ -153,7 +156,8 @@ class _PaymentChoiceState extends State<PaymentChoice> {
         builder: (BuildContext b) {
           return StripePaymentWidget(
             amount,
-            passedPaymentId: paymentMethodId!,
+            user: widget.user,
+            passedPaymentId: paymentMethodId,
             onSucceed: validOrder,
           );
         });
@@ -167,7 +171,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
     }
 
     try {
-
+      print('in try');
       final token = await StripePayment.paymentRequestWithNativePay(
         androidPayOptions: AndroidPayPaymentRequest(
           totalPrice: "${widget.amount}",
@@ -184,7 +188,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
           ],
         ),
       );
-
+      print('token = $token');
       final paymentMethod = await StripePayment.createPaymentMethod(
           PaymentMethodRequest(
               card: CreditCard(token: token.tokenId), token: token));
@@ -223,6 +227,7 @@ class _PaymentChoiceState extends State<PaymentChoice> {
         }
       });
     } catch (error) {
+      print('error = ${error.toString()}');
       if (!Platform.isIOS) Navigator.pop(context);
       setState(() => loading = false);
     }

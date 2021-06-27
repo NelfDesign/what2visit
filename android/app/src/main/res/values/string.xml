@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">208511234477415</string>
+    <string name="app_name">what2visit</string>
+    <string name="fb_login_protocol_scheme">fb208511234477415</string>
+</resources>

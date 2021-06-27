@@ -37,6 +37,7 @@ class ButtonCTA extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: <Color>[
               orangeDelete ? Colors.red : Colors.blue,
+              Colors.blue
             ],
           ),
         ),

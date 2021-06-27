@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:intl/intl.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
 import 'package:what2visit/models/user.dart';
 import 'package:what2visit/widgets/button_cta.dart';
-import 'package:intl/intl.dart';
 
 class StripePaymentWidget extends StatefulWidget {
   final num? amount;
@@ -24,7 +24,7 @@ class StripePaymentWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _StripePaymentWidgetState(
-    selectedPaymentMethodId: passedPaymentId!,
+    selectedPaymentMethodId: passedPaymentId ?? null,
   );
 }
 
@@ -45,6 +45,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
   void initState() {
     super.initState();
     _listenUserCards();
+    //StripeService.init();
     if (selectedPaymentMethodId != null) _createPayment();
   }
 
@@ -72,6 +73,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
 
   void _listenPayment() {
     this.paymentRef.snapshots().listen((docSnapshot) {
+      print('doc = ${docSnapshot.toString()}');
       setState(() {
         paymentStatus = docSnapshot.data()["status"];
         paymentError = docSnapshot.data()["error"];
@@ -173,9 +175,8 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
     final addCardButton = ButtonCTA(
       width: Device.screenWidth,
       title: selectedPaymentMethodId == null
-          ? "add new cart"
-          : "payment.pay"
-          " ${widget.amount}",
+          ? "Ajouter une carte"
+          : "Payer ${widget.amount}",
       onTap: () {
         selectedPaymentMethodId == null ? _addNewCard() : _createPayment();
       },
@@ -196,8 +197,8 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
         Visibility(
           child: Text(
             paymentMethods.isNotEmpty
-                ? "payment.select_credit_card"
-                : "payment.no_saved_card",
+                ? "Sélectionner une carte"
+                : "Pas de carte sauvegardée",
             style: TextStyle(color: Colors.black54),
           ),
         ),
@@ -214,7 +215,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
         children: [
           Expanded(
             child: Text(
-                "payment.credit_card_payment"),
+                "Cartes de crédit"),
           ),
           Visibility(
             child: IconButton(
@@ -253,7 +254,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
                 title:
                 Text("payment.delete_card"),
                 content: Text(
-                    "${"payment.delete_card_confirmation"} "
+                    "${"delete_card_confirmation"} "
                         "\"${card["last4"]}\" ?"),
                 actions: [
                   TextButton(
@@ -269,7 +270,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
                     },
                   ),
                   TextButton(
-                    child: Text("payment.no",
+                    child: Text("Non",
                         style: TextStyle(color: Colors.redAccent)),
                     onPressed: () => Navigator.pop(context),
                   )
@@ -320,11 +321,11 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
   Widget get paymentProgressWidget {
     String? paymentStatusText;
     Widget? paymentStatusWidget;
+    print('payment status= $paymentStatus');
     switch (paymentStatus) {
       case "new":
       case "requires_confirmation":
-        paymentStatusText =
-           "payment.payment_in_progress";
+        paymentStatusText = "paiement en cours";
         paymentStatusWidget = Container(
           child: CircularProgressIndicator(
             strokeWidth: 1.5,
@@ -334,8 +335,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
         );
         break;
       case "succeeded":
-        paymentStatusText =
-            "payment.payment_succeeded";
+        paymentStatusText = "paiement accepté";
         paymentStatusWidget = Icon(Icons.check, color: Colors.greenAccent);
         Future.delayed(Duration(milliseconds: 800), () {
           Navigator.pop(context);
@@ -343,8 +343,7 @@ class _StripePaymentWidgetState extends State<StripePaymentWidget> {
         });
         break;
       case "requires_action":
-        paymentStatusText =
-            "payment.waiting_for_validation";
+        paymentStatusText = "En attente de validation";
         paymentStatusWidget = Icon(Icons.send_to_mobile, color: Colors.black38);
         break;
     }
